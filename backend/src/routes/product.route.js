@@ -17,6 +17,7 @@ const router = Router();
 
 // Public
 router.get("/get-all-products", getAllProducts);
+router.get("/category/:categorySlug", getProductsByCategory);
 router.get("/:slug", getProductBySlug);
 
 // Admin
@@ -49,6 +50,5 @@ router.patch(
   isAdmin,
   toggleProductStatus
 );
-router.get("/category/:categoryId", getProductsByCategory);
 
 export default router;

@@ -18,7 +18,6 @@ export default function Header() {
   const [productsCache, setProductsCache] = useState({});
   const [loadingProducts, setLoadingProducts] = useState(false);
 
-  /* -------------------- Fetch Categories -------------------- */
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -32,7 +31,6 @@ export default function Header() {
     fetchCategories();
   }, []);
 
-  /* -------------------- Fetch User -------------------- */
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -47,7 +45,6 @@ export default function Header() {
     fetchUser();
   }, []);
 
-  /* -------------------- Category Hover -------------------- */
   const handleCategoryHover = async (category) => {
     setActiveCategory(category);
 
@@ -58,7 +55,7 @@ export default function Header() {
 
     setLoadingProducts(true);
     try {
-      const products = await getProductsByCategory(category._id);
+      const products = await getProductsByCategory(category.slug);
       setCategoryProducts(products || []);
       setProductsCache((prev) => ({
         ...prev,
@@ -72,12 +69,12 @@ export default function Header() {
     }
   };
 
-  /* -------------------- Logout -------------------- */
   const handleLogout = async () => {
     try {
       await logoutUser();
       setUser(null);
       setProfileOpen(false);
+      window.location.reload();
     } catch (err) {
       console.error("Logout failed:", err);
     }
@@ -85,12 +82,10 @@ export default function Header() {
 
   return (
     <header className="flex justify-between items-center px-6 py-4 border-b bg-white">
-      {/* Logo */}
       <Link href="/" className="font-bold text-xl">
         Logo
       </Link>
 
-      {/* Navigation */}
       <ul className="flex gap-6 relative">
         <li>
           <Link href="/">Home</Link>
@@ -98,20 +93,18 @@ export default function Header() {
 
         {categories.map((category) => (
           <li
-            key={category._id}
+            key={category.slug}
             className="relative"
             onMouseEnter={() => handleCategoryHover(category)}
             onMouseLeave={() => {
               setActiveCategory(null);
-              setCategoryProducts([]);
             }}>
             <Link
-              href={`/category/${category.slug}`}
+              href={`/products/${category.slug}`}
               className="cursor-pointer">
               {category.name}
             </Link>
 
-            {/* Dropdown */}
             {activeCategory?._id === category._id && (
               <div className="absolute left-0 top-full mt-2 w-72 bg-white border shadow-lg rounded z-50">
                 {loadingProducts ? (
@@ -119,7 +112,7 @@ export default function Header() {
                 ) : (
                   <>
                     <div className="px-4 py-2 border-b text-sm font-semibold">
-                      <Link href={`/category/${category.slug}`}>
+                      <Link href={`/products/${category.slug}`}>
                         View all {category.name}
                       </Link>
                     </div>
@@ -153,40 +146,58 @@ export default function Header() {
         </li>
       </ul>
 
-      {/* Right Actions */}
       <div className="relative flex items-center gap-4">
         <span className="cursor-pointer">Search</span>
 
-        {/* Profile */}
-        <button onClick={() => setProfileOpen((prev) => !prev)}>Profile</button>
+        <button
+          className="cursor-pointer"
+          onClick={() => setProfileOpen((prev) => !prev)}>
+          Profile
+        </button>
 
         {profileOpen && authChecked && (
           <div className="absolute right-0 top-10 bg-white border shadow p-4 rounded z-50 min-w-[160px]">
             {user ? (
               <div className="flex flex-col gap-2">
-                <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                <p className="text-xs text-gray-500 truncate">
+                  {user.fullName}
+                </p>
                 <hr />
 
                 {user.isAdmin && (
-                  <Link href="/admin" onClick={() => setProfileOpen(false)}>
+                  <Link
+                    className="cursor-pointer"
+                    href="/admin"
+                    onClick={() => setProfileOpen(false)}>
                     Admin Dashboard
                   </Link>
                 )}
 
-                <Link href="/profile" onClick={() => setProfileOpen(false)}>
+                <Link
+                  className="cursor-pointer"
+                  href="/profile"
+                  onClick={() => setProfileOpen(false)}>
                   Profile
                 </Link>
 
-                <button onClick={handleLogout} className="text-left">
+                <button
+                  onClick={handleLogout}
+                  className="text-left cursor-pointer">
                   Logout
                 </button>
               </div>
             ) : (
               <div className="flex flex-col gap-2">
-                <Link href="/login" onClick={() => setProfileOpen(false)}>
+                <Link
+                  className="cursor-pointer"
+                  href="/login"
+                  onClick={() => setProfileOpen(false)}>
                   Login
                 </Link>
-                <Link href="/signup" onClick={() => setProfileOpen(false)}>
+                <Link
+                  href="/signup"
+                  className="cursor-pointer"
+                  onClick={() => setProfileOpen(false)}>
                   Sign Up
                 </Link>
               </div>

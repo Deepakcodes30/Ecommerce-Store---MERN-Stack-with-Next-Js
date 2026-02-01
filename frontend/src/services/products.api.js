@@ -60,9 +60,9 @@ async function getProductBySlug(slug) {
   });
 }
 
-export const getProductsByCategory = (categoryId) => {
+const getProductsByCategory = (categorySlug) => {
   return fetchWrapper(async () => {
-    const res = await api.get(`/products/category/${categoryId}`);
+    const res = await api.get(`/products/category/${categorySlug}`);
     return res.data.data;
   });
 };

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Product } from "../models/product.model.js";
+import { Category } from "../models/category.model.js";
 import { apiError } from "../utils/apiError.js";
 import { apiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -214,13 +215,21 @@ const getProductBySlug = asyncHandler(async (req, res) => {
 });
 
 const getProductsByCategory = asyncHandler(async (req, res) => {
-  const { categoryId } = req.params;
+  const { categorySlug } = req.params;
 
-  if (!categoryId || !mongoose.Types.ObjectId.isValid(categoryId)) {
-    throw new apiError(400, "Invalid category ID");
+  if (!categorySlug) {
+    throw new apiError(400, "Category slug missing");
   }
 
-  const products = await Product.find({ category: categoryId, isActive: true })
+  const category = await Category.findOne({ slug: categorySlug });
+  if (!category) {
+    throw new apiError(400, "Category not found");
+  }
+
+  const products = await Product.find({
+    category: category._id,
+    isActive: true,
+  })
     .populate("category", "name slug")
     .sort({ createdAt: -1 });
 
