@@ -60,6 +60,13 @@ async function getProductBySlug(slug) {
   });
 }
 
+export const getProductsByCategory = (categoryId) => {
+  return fetchWrapper(async () => {
+    const res = await api.get(`/products/category/${categoryId}`);
+    return res.data.data;
+  });
+};
+
 export {
   createProduct,
   updateProduct,
@@ -68,4 +75,5 @@ export {
   toggleProductStatus,
   getAllProducts,
   getProductBySlug,
+  getProductsByCategory,
 };

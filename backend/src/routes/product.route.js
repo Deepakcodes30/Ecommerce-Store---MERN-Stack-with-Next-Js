@@ -7,6 +7,7 @@ import {
   toggleProductStatus,
   getAllProducts,
   getProductBySlug,
+  getProductsByCategory,
 } from "../controllers/product.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { isAdmin } from "../middlewares/isAdmin.middleware.js";
@@ -48,5 +49,6 @@ router.patch(
   isAdmin,
   toggleProductStatus
 );
+router.get("/category/:categoryId", getProductsByCategory);
 
 export default router;

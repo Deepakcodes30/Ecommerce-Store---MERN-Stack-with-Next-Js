@@ -30,15 +30,16 @@ export default function ProductCard({ product, onRefresh }) {
     <div className="border rounded-lg p-4 space-y-3">
       <Link href={`/admin/products/${product._id}`}>
         <img
-          src={product.thumbnail}
-          alt={product.name}
-          className="h-40 w-full object-cover rounded"
+          src={product.images?.[0]?.url || "/placeholder.png"}
+          alt={product.title}
+          className="h-auto w-full object-fit rounded"
         />
       </Link>
 
       <div>
-        <h3 className="font-semibold">{product.name}</h3>
-        <p>₹{product.price}</p>
+        <h3 className="font-semibold">{product.title}</h3>
+        <p>discounted price: ₹{product.discountedPrice}</p>
+        <p>mrp: ₹{product.mrp}</p>
         <p className="text-sm">
           Status:{" "}
           <span

@@ -163,7 +163,11 @@ const toggleProductStatus = asyncHandler(async (req, res) => {
 const getAllProducts = asyncHandler(async (req, res) => {
   const { category, color, minPrice, maxPrice, sort } = req.query;
 
-  const filter = { isActive: true };
+  // const isAdmin = req.user?.isAdmin === true;
+
+  // const filter = isAdmin ? {} : { isActive: true };
+
+  const filter = {};
 
   // category filter
   if (category) {
@@ -209,6 +213,22 @@ const getProductBySlug = asyncHandler(async (req, res) => {
   return res.status(200).json(new apiResponse(200, product, "Product fetched"));
 });
 
+const getProductsByCategory = asyncHandler(async (req, res) => {
+  const { categoryId } = req.params;
+
+  if (!categoryId || !mongoose.Types.ObjectId.isValid(categoryId)) {
+    throw new apiError(400, "Invalid category ID");
+  }
+
+  const products = await Product.find({ category: categoryId, isActive: true })
+    .populate("category", "name slug")
+    .sort({ createdAt: -1 });
+
+  return res
+    .status(200)
+    .json(new apiResponse(200, products, "Products fetched successfully"));
+});
+
 export {
   createProduct,
   updateProduct,
@@ -217,4 +237,5 @@ export {
   toggleProductStatus,
   getAllProducts,
   getProductBySlug,
+  getProductsByCategory,
 };

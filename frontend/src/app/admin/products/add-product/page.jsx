@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { createProduct } from "@/services/products.api";
 import { getActiveCategories } from "@/services/categories.api";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const router = useRouter();
 
   const [form, setForm] = useState({
     title: "",
@@ -74,7 +76,10 @@ export default function Page() {
       }
 
       if (variants.length) {
-        formData.append("variants", JSON.stringify(variants));
+        variants.forEach((variant, index) => {
+          formData.append(`variants[${index}][color]`, variant.color);
+          formData.append(`variants[${index}][stock]`, variant.stock);
+        });
       }
 
       images.forEach((img) => {
@@ -102,12 +107,7 @@ export default function Page() {
           onChange={handleChange}
           required
         />
-        <input
-          name="slug"
-          placeholder="Slug"
-          onChange={handleChange}
-          required
-        />
+        <input name="slug" placeholder="Slug" onChange={handleChange} />
         <input name="sku" placeholder="SKU" onChange={handleChange} required />
 
         <textarea
@@ -143,7 +143,6 @@ export default function Page() {
             required
           />
 
-          {/* ✅ Category select */}
           <select
             name="category"
             value={form.category}
@@ -165,7 +164,6 @@ export default function Page() {
           onChange={handleChange}
         />
 
-        {/* Images */}
         <input
           type="file"
           multiple
@@ -174,7 +172,6 @@ export default function Page() {
           required
         />
 
-        {/* Variants */}
         <div>
           <div className="flex justify-between items-center mb-2">
             <h3 className="font-medium">Variants</h3>
@@ -208,6 +205,7 @@ export default function Page() {
 
         <button
           disabled={loading}
+          onClick={() => router.push("/admin/products/all-products")}
           className="bg-black text-white px-6 py-2 rounded">
           {loading ? "Creating..." : "Create Product"}
         </button>

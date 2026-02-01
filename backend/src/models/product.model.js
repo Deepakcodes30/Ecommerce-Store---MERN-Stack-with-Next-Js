@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import slugify from "slugify";
 
 const productSchema = new Schema(
   {
@@ -82,12 +83,18 @@ const productSchema = new Schema(
 //adding performance index so that DB can directly search the required fields
 productSchema.index({ category: 1, isActive: 1 });
 
+productSchema.pre("validate", function () {
+  if (this.title && !this.slug) {
+    this.slug = slugify(this.title, { lower: true });
+  }
+});
+
 //making sure Discounted price is not greater than MRP
 productSchema.pre("save", function (next) {
   if (this.discountedPrice > this.mrp) {
     return next(new Error("Discounted price cannot exceed MRP"));
   }
-  next();
+  next;
 });
 
 export const Product = mongoose.model("Product", productSchema);
