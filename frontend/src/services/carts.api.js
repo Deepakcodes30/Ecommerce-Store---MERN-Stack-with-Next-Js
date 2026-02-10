@@ -1,4 +1,5 @@
 import api from "./api";
+import { fetchWrapper } from "./fetchWrapper";
 
 async function getCart() {
   return fetchWrapper(async () => {
@@ -7,7 +8,7 @@ async function getCart() {
   });
 }
 
-async function addToCart({ productId, quantity = 1, variant }) {
+async function addToCart({ productId, quantity, variant }) {
   return fetchWrapper(async () => {
     const res = await api.post("/carts/add-to-cart", {
       productId,

@@ -4,7 +4,7 @@ import Link from "next/link";
 function CommonProductCard({ product }) {
   return (
     <div className="border rounded-lg p-4 space-y-3 h-auto w-auto">
-      <Link href={`/${product.slug}`}>
+      <Link href={`/product/${product.slug}`}>
         <img
           src={product.images?.[0]?.url || "/placeholder.png"}
           alt={product.title}

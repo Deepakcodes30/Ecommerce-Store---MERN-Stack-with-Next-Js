@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCart, clearCart } from "@/services/cart.api";
+import { getCart, clearCart } from "@/services/carts.api";
 import { createOrder } from "@/services/orders.api";
 import { useRouter } from "next/navigation";
 

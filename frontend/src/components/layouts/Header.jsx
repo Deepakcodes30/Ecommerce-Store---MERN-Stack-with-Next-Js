@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-
+import MiniCart from "../common/MiniCart.jsx";
+import { getCart } from "@/services/carts.api";
 import { getActiveCategories } from "@/services/categories.api.js";
 import { getProductsByCategory } from "@/services/products.api.js";
 import { getCurrentUser, logoutUser } from "@/services/users.api.js";
@@ -17,6 +18,8 @@ export default function Header() {
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [productsCache, setProductsCache] = useState({});
   const [loadingProducts, setLoadingProducts] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [cart, setCart] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -80,6 +83,19 @@ export default function Header() {
     }
   };
 
+  const fetchCart = async () => {
+    try {
+      const data = await getCart();
+      setCart(data);
+    } catch {
+      setCart(null);
+    }
+  };
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
   return (
     <header className="flex justify-between items-center px-6 py-4 border-b bg-white">
       <Link href="/" className="font-bold text-xl">
@@ -100,7 +116,7 @@ export default function Header() {
               setActiveCategory(null);
             }}>
             <Link
-              href={`/products/${category.slug}`}
+              href={`/collections/${category.slug}`}
               className="cursor-pointer">
               {category.name}
             </Link>
@@ -112,7 +128,7 @@ export default function Header() {
                 ) : (
                   <>
                     <div className="px-4 py-2 border-b text-sm font-semibold">
-                      <Link href={`/products/${category.slug}`}>
+                      <Link href={`/collections/${category.slug}`}>
                         View all {category.name}
                       </Link>
                     </div>
@@ -205,7 +221,20 @@ export default function Header() {
           </div>
         )}
 
-        <span className="cursor-pointer">Cart</span>
+        <button onClick={() => setCartOpen((p) => !p)} className="relative">
+          Cart
+          {cart?.items?.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-black text-white text-xs px-1 rounded-full">
+              {cart.items.length}
+            </span>
+          )}
+        </button>
+
+        {cartOpen && (
+          <div className="absolute right-0 top-10 bg-white border shadow-lg rounded z-50">
+            <MiniCart cart={cart} onRefresh={fetchCart} />
+          </div>
+        )}
       </div>
     </header>
   );
