@@ -1,6 +1,10 @@
 import React from "react";
 
-function page() {
+export const metadata = {
+  title: "Privacy Policy",
+};
+
+export default function Page() {
   return (
     <div>
       <p>
@@ -59,5 +63,3 @@ function page() {
     </div>
   );
 }
-
-export default page;

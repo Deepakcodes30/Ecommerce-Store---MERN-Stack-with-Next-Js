@@ -1,6 +1,10 @@
 import React from "react";
 
-function page() {
+export const metadata = {
+  title: "Terms & Conditions",
+};
+
+export default function Page() {
   return (
     <div>
       <p>
@@ -273,5 +277,3 @@ function page() {
     </div>
   );
 }
-
-export default page;

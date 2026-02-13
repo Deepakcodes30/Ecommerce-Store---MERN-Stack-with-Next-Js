@@ -1,8 +1,10 @@
 import Signup from "../../../components/auth/Signup.jsx";
 import React from "react";
 
-function page() {
+export const metadata = {
+  title: "Signup",
+};
+
+export default function Page() {
   return <Signup />;
 }
-
-export default page;

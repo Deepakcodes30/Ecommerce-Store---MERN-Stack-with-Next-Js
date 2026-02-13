@@ -3,8 +3,10 @@
 import Login from "../../../components/auth/Login.jsx";
 import React from "react";
 
-function page() {
+export const metadata = {
+  title: "Login",
+};
+
+export default function Page() {
   return <Login />;
 }
-
-export default page;

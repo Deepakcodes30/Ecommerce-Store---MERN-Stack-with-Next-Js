@@ -5,7 +5,11 @@ import { getCart, clearCart } from "@/services/carts.api";
 import { createOrder } from "@/services/orders.api";
 import { useRouter } from "next/navigation";
 
-export default function page() {
+export const metadata = {
+  title: "Checkout",
+};
+
+export default function Page() {
   const router = useRouter();
 
   const [cart, setCart] = useState(null);

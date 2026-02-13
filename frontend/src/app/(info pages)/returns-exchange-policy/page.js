@@ -1,6 +1,10 @@
 import React from "react";
 
-function page() {
+export const metadata = {
+  title: "Returns & Exchange Policy",
+};
+
+export default function Page() {
   return (
     <div>
       <p>
@@ -37,5 +41,3 @@ function page() {
     </div>
   );
 }
-
-export default page;
