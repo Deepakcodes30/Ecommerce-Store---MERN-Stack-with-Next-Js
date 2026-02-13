@@ -261,7 +261,17 @@ export default function Page({ params }) {
 
         {/* Products Grid */}
         {loading ? (
-          <div className="text-center py-12">Loading products...</div>
+          <div className="grid grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <div
+                key={index}
+                className="rounded-lg p-4 space-y-4 bg-white shadow animate-[pulse_10s_ease-in-out_infinite]">
+                <div className="bg-gray-200 h-60 w-full rounded-md"></div>
+                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+              </div>
+            ))}
+          </div>
         ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-3 gap-6">
             {filteredProducts.map((product) => (

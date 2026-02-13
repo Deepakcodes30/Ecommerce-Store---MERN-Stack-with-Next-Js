@@ -238,7 +238,9 @@ export default function Header() {
           </div>
         )}
 
-        <button onClick={() => setCartOpen((p) => !p)} className="relative">
+        <button
+          onClick={() => setCartOpen((p) => !p)}
+          className="relative cursor-pointer">
           Cart
           {cart?.items?.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-black text-white text-xs px-1 rounded-full">

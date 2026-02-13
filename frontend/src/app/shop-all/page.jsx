@@ -257,14 +257,18 @@ export default function Page() {
 
         {/* Products Grid */}
         {loading ? (
-          <div className="text-center py-12">Loading products...</div>
-        ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (
-              <CommonProductCard key={product._id} product={product} />
+            {[...Array(6)].map((_, index) => (
+              <div
+                key={index}
+                className="rounded-lg p-4 space-y-4 bg-white shadow animate-[pulse_10s_ease-in-out_infinite]">
+                <div className="bg-gray-200 h-60 w-full rounded-md"></div>
+                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+              </div>
             ))}
           </div>
-        ) : (
+        ) : filteredProducts.length === 0 ? (
           <div className="text-center py-12">
             <h2 className="text-xl font-semibold mb-2">No products found</h2>
             <p className="text-gray-600 mb-4">Try adjusting your filters</p>
@@ -273,6 +277,12 @@ export default function Page() {
               className="text-blue-600 hover:underline">
               Clear all filters
             </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-6">
+            {filteredProducts.map((product) => (
+              <CommonProductCard key={product._id} product={product} />
+            ))}
           </div>
         )}
       </div>
