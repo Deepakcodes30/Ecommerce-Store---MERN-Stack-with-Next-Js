@@ -9,8 +9,12 @@ import { getProductsByCategory } from "@/services/products.api.js";
 import { getCurrentUser, logoutUser } from "@/services/users.api.js";
 import Image from "next/image.js";
 import logo from "@/images/logo.png";
+import { usePathname } from "next/navigation.js";
 
 export default function Header() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   const [categories, setCategories] = useState([]);
   const [user, setUser] = useState(null);
   const [authChecked, setAuthChecked] = useState(false);
@@ -50,14 +54,24 @@ export default function Header() {
     fetchUser();
   }, []);
 
-  const handleCategoryHover = async (category) => {
+  const handleCategoryClick = async (category) => {
+    // If clicking the same category, toggle close
+    if (activeCategory?._id === category._id) {
+      setActiveCategory(null);
+      setCategoryProducts([]);
+      return;
+    }
+
+    // Set new active category
     setActiveCategory(category);
 
+    // Check cache
     if (productsCache[category._id]) {
       setCategoryProducts(productsCache[category._id]);
       return;
     }
 
+    // Fetch products
     setLoadingProducts(true);
     try {
       const products = await getProductsByCategory(category.slug);
@@ -99,7 +113,10 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="flex justify-between items-center px-6 py-4 h-15 pt-10 bg-berce-ivory text-md text-berce-black">
+    <header
+      className={`flex justify-between items-center px-6 py-4 h-15 pt-10  text-md text-berce-black ${
+        isHomePage ? "bg-berce-ivory" : "bg-berce-white"
+      }`}>
       <Link href="/" className="font-extrabold text-xl ml-10">
         <Image src={logo} alt="Berce" height={50} width={100} />
       </Link>
@@ -110,18 +127,12 @@ export default function Header() {
         </li>
 
         {categories.map((category) => (
-          <li
-            key={category.slug}
-            className="relative"
-            onMouseEnter={() => handleCategoryHover(category)}
-            onMouseLeave={() => {
-              setActiveCategory(null);
-            }}>
-            <Link
-              href={`/collections/${category.slug}`}
+          <li key={category.slug} className="relative">
+            <button
+              onClick={() => handleCategoryClick(category)}
               className="cursor-pointer">
               {category.name}
-            </Link>
+            </button>
 
             {activeCategory?._id === category._id && (
               <div className="absolute left-0 top-full mt-2 w-72 bg-white border shadow-lg rounded z-50">
@@ -130,7 +141,9 @@ export default function Header() {
                 ) : (
                   <>
                     <div className="px-4 py-2 border-b text-sm font-semibold">
-                      <Link href={`/collections/${category.slug}`}>
+                      <Link
+                        href={`/collections/${category.slug}`}
+                        onClick={() => setActiveCategory(null)}>
                         View all {category.name}
                       </Link>
                     </div>
@@ -141,7 +154,9 @@ export default function Header() {
                           <li
                             key={product._id}
                             className="px-4 py-2 hover:bg-gray-100">
-                            <Link href={`/product/${product.slug}`}>
+                            <Link
+                              href={`/product/${product.slug}`}
+                              onClick={() => setActiveCategory(null)}>
                               {product.title}
                             </Link>
                           </li>
