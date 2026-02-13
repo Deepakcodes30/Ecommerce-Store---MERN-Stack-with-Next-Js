@@ -7,6 +7,8 @@ import { getCart } from "@/services/carts.api";
 import { getActiveCategories } from "@/services/categories.api.js";
 import { getProductsByCategory } from "@/services/products.api.js";
 import { getCurrentUser, logoutUser } from "@/services/users.api.js";
+import Image from "next/image.js";
+import logo from "@/images/logo.png";
 
 export default function Header() {
   const [categories, setCategories] = useState([]);
@@ -97,12 +99,12 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="flex justify-between items-center px-6 py-4 border-b bg-white">
-      <Link href="/" className="font-bold text-xl">
-        Logo
+    <header className="flex justify-between items-center px-6 py-4 h-15 pt-10 bg-berce-ivory text-md text-berce-black">
+      <Link href="/" className="font-extrabold text-xl ml-10">
+        <Image src={logo} alt="Berce" height={50} width={100} />
       </Link>
 
-      <ul className="flex gap-6 relative">
+      <ul className="flex gap-6 relative font-bold">
         <li>
           <Link href="/">Home</Link>
         </li>
@@ -162,7 +164,7 @@ export default function Header() {
         </li>
       </ul>
 
-      <div className="relative flex items-center gap-4">
+      <div className="relative flex items-center gap-4 mr-10 font-bold">
         <span className="cursor-pointer">Search</span>
 
         <button

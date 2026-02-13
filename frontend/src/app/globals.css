@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+@theme {
+  --color-berce-ivory: #f6efea;
+  --color-berce-white: #ffffff;
+  --color-berce-orange: #f4624b;
+  --color-berce-black: #1b1b1b;
+}
+
+._movingTexts::-webkit-scrollbar {
+  display: none;
+}
+
+._movingTexts {
+  animation: moving 20s linear 0s infinite forwards;
+}
+._marquee:hover ._movingTexts {
+  animation-play-state: paused;
+}
+
+@keyframes moving {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

@@ -5,9 +5,10 @@ import React from "react";
 
 function Footer() {
   return (
-    <div className="grid grid-cols-3">
+    <div className="tracking-wide leading-7 grid grid-cols-3 text-berce-white bg-berce-black p-15 gap-20">
       <div className="flex flex-col">
-        <p>#CarryTheMoment</p>
+        <p className="text-xl font-bold">#CarryTheMoment</p>
+        <br />
         <p>
           Life isn’t just about destinations; it’s about the journey itself—the
           moments in between. At BERCE, we understand that every step you take
@@ -17,6 +18,7 @@ function Footer() {
           seamlessly blend utility with timeless elegance, and to give you space
           to focus on your story.
         </p>
+        <br />
         <p>
           At BERCE, we don’t just create bags; we create companions for the
           memories you’ll cherish. Whether you're navigating the city, boarding
@@ -26,21 +28,33 @@ function Footer() {
       </div>
 
       <div className="flex flex-col">
-        <p>Quick Links</p>
+        <p className="text-xl font-bold">Quick Links</p>
+        <br />
         <ul className="flex flex-col">
-          <Link href="/shop-all">Shop All</Link>
-          <Link href="/our-story">Our Story</Link>
-          <Link href="/shipping-delivery-policy">
+          <Link className="hover:underline" href="/shop-all">
+            Shop All
+          </Link>
+          <Link className="hover:underline" href="/our-story">
+            Our Story
+          </Link>
+          <Link className="hover:underline" href="/shipping-delivery-policy">
             Shipping and Delivery policy
           </Link>
-          <Link href="/returns-exchange-policy">Returns & Exchange Policy</Link>
-          <Link href="/privacy-policy">Privacy Policy</Link>
-          <Link href="/terms-conditions">Terms & Conditions</Link>
+          <Link className="hover:underline" href="/returns-exchange-policy">
+            Returns & Exchange Policy
+          </Link>
+          <Link className="hover:underline" href="/privacy-policy">
+            Privacy Policy
+          </Link>
+          <Link className="hover:underline" href="/terms-conditions">
+            Terms & Conditions
+          </Link>
         </ul>
       </div>
 
       <div className="flex flex-col">
-        <p>Contact Us</p>
+        <p className="text-xl font-bold">Contact Us</p>
+        <br />
         <ul>
           <li>Office Timings - Monday to Friday, 10 am - 5 pm​</li>
           <li>Email - support@berce.co</li>
