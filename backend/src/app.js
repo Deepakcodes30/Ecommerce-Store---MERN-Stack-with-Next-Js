@@ -6,7 +6,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://berce-backend.vercel.app"],
+    origin: ["http://localhost:3000", "https://berce-store.vercel.app"],
     credentials: true,
   })
 );
