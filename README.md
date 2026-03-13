@@ -41,6 +41,7 @@ https://berce-backend.vercel.app
 |------|-------------|
 | Frontend | Next.js |
 | UI Library | React.js |
+| Styling | Tailwind CSS |
 | Backend | Node.js |
 | Web Framework | Express.js |
 | Database | MongoDB |
