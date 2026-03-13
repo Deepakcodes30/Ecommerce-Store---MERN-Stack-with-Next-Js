@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://berce-store.vercel.app/api/v1",
+  baseURL: "http://berce-backend.vercel.app/api/v1",
   withCredentials: true,
 });
 
