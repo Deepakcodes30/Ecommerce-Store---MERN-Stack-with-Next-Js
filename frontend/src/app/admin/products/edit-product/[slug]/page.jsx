@@ -3,18 +3,18 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
-  getProductById,
+  getProductBySlug,
   updateProduct,
   deleteProduct,
 } from "@/services/products.api";
 
 export default function page() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const router = useRouter();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    getProductById(id).then(setProduct);
+    getProductBySlug(slug).then(setProduct);
   }, [id]);
 
   const handleUpdate = async () => {

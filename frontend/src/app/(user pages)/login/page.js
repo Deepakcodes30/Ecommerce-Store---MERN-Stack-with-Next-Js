@@ -1,5 +1,3 @@
-"use client";
-
 import Login from "../../../components/auth/Login.jsx";
 import React from "react";
 

@@ -1,5 +1,3 @@
-"use client";
-
 import UserProfile from "@/components/auth/UserProfile";
 import React from "react";
 
