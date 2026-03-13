@@ -6,6 +6,9 @@ dotenv.config({
   path: "./.env",
 });
 
+/*
+This code is just for development to check the port
+Vercel is serverless so it doesnt listen all the time app.listen should not be used
 connectDB()
   .then(() => {
     app.listen(process.env.PORT || 8000, () => {
@@ -14,7 +17,9 @@ connectDB()
   })
   .catch((error) => {
     console.log("Mongo db connection failed !!!", error);
-  });
+  }); */
+
+await connectDB();
 
 app.get("/", (_, res) => {
   res.send("Backend running");
