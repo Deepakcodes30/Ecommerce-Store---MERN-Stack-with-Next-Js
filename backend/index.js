@@ -24,3 +24,6 @@ await connectDB();
 app.get("/", (_, res) => {
   res.send("Backend running");
 });
+
+//exporting the app again because vercel expects index.js to export something that handles requests
+export default app;
